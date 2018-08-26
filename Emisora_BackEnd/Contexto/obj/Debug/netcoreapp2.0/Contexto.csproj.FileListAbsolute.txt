@@ -1,0 +1,12 @@
+C:\Users\Angge\Desktop\Emisora\Emisora\Contexto\bin\Debug\netcoreapp2.0\Contexto.deps.json
+C:\Users\Angge\Desktop\Emisora\Emisora\Contexto\bin\Debug\netcoreapp2.0\Contexto.dll
+C:\Users\Angge\Desktop\Emisora\Emisora\Contexto\obj\Debug\netcoreapp2.0\Contexto.csprojResolveAssemblyReference.cache
+C:\Users\Angge\Desktop\Emisora\Emisora\Contexto\obj\Debug\netcoreapp2.0\Contexto.csproj.CoreCompileInputs.cache
+C:\Users\Angge\Desktop\Emisora\Emisora\Contexto\obj\Debug\netcoreapp2.0\Contexto.AssemblyInfoInputs.cache
+C:\Users\Angge\Desktop\Emisora\Emisora\Contexto\obj\Debug\netcoreapp2.0\Contexto.AssemblyInfo.cs
+C:\Users\Angge\Desktop\Emisora\Emisora\Contexto\bin\Debug\netcoreapp2.0\Modelos.dll
+C:\Users\Angge\Desktop\Emisora\Emisora\Contexto\bin\Debug\netcoreapp2.0\Contexto.pdb
+C:\Users\Angge\Desktop\Emisora\Emisora\Contexto\bin\Debug\netcoreapp2.0\Modelos.pdb
+C:\Users\Angge\Desktop\Emisora\Emisora\Contexto\obj\Debug\netcoreapp2.0\Contexto.csproj.CopyComplete
+C:\Users\Angge\Desktop\Emisora\Emisora\Contexto\obj\Debug\netcoreapp2.0\Contexto.dll
+C:\Users\Angge\Desktop\Emisora\Emisora\Contexto\obj\Debug\netcoreapp2.0\Contexto.pdb

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>QueEmisora!</title>
+        <link rel="shortcut icon" type="image/x-icon" href="icono.ico" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+        <style type="text/css">
+            body {
+                display: flex;
+                min-height: 100vh;
+                flex-direction: column;
+            }
+
+            main {
+                flex: 1 0 auto;
+            }
+
+            .administrar{
+                font-weight: bold;
+            }
+
+            .btnAgregarGrabacion{
+                margin-top: 23px;
+            }
+
+            .grabacionesExistentesTitulo{
+                font-size: 20px !important;
+            }
+
+            .botonPorGrabacion{
+                margin-bottom: 10px;
+            }
+
+            .botonPorTransmision{
+                margin-bottom: 10px;
+                margin-left: 10px;
+            }
+
+            .tamanioLabelInput{
+                font-size: 15px !important;
+            }
+
+            .crearGrabacionbtn{
+                margin-bottom: 15px;
+            }
+
+            .documentacionBtn{
+                margin-top: 15px;
+                margin-bottom: -15px;
+            }
+
+            /* LISTA */
+
+            #lista4 ol {
+                counter-reset: li; 
+                list-style: none; 
+                *list-style: decimal; 
+                font: 15px 'trebuchet MS', 'lucida sans';
+                padding: 0;
+                margin-bottom: 4em;
+                text-shadow: 0 1px 0 rgba(255,255,255,.5);
+            }
+
+            #lista4 ol {
+                margin: 0 0 0 2em; 
+            }
+
+            #lista4 {
+                list-style-type: none;
+                list-style-type: decimal IE; /*IE 7- hack*/
+                
+                margin: 0;
+                margin-left: 3em;
+                padding: 0;
+                
+                counter-reset: li-counter;
+            }
+
+            #lista4 > li{
+                position: relative;
+                margin-bottom: 20px;
+                padding: 1em;
+                border-left: 2px solid #CCCCCC;
+                background-color: #f5f5f5;
+            }
+
+            #lista4 > li:before {
+                position: absolute;
+                top: 0;
+                left: -0.95em;
+                width: 1em;
+            
+                font-size: 4em;
+                line-height: 1;
+                font-weight: bold;
+                text-align: right;
+                color: #464646;
+                
+                transform: rotate(-25deg);
+                -ms-transform: rotate(-25deg);
+                -webkit-transform: rotate(-25deg);
+                z-index: -99;
+                overflow: hidden;
+                
+                content: counter(li-counter);
+                counter-increment: li-counter;
+            }
+
+            .TransmisionActual{
+                font-size: 25px !important;
+                color: black !important;
+                font-weight: bold;
+            }
+
+            .colorIconitosTransmisionE{
+                color: black;
+            }
+            .colorIconitosTransmisionD{
+                color: black;
+            }
+
+            .colorIconitosTransmisionE:hover{
+                color: teal;
+            }
+
+            .colorIconitosTransmisionD:hover{
+                color: red;
+            }
+
+            .ojito{
+                color: black;
+                margin: 5px;
+                float: right;
+            }
+
+            .ojito:hover{
+                color: teal;
+                cursor: pointer;
+            }
+
+            .candadito{
+                color:black;
+                margin: 5px;
+                float: right;
+            }
+
+            .candadito:hover{
+                color: teal;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+
+        <header>
+            <nav>
+                <div class="nav-wrapper grey darken-4">
+                    <a href="#!" class="brand-logo center">QueEmisora!</a>
+                    <ul class="right hide-on-med-and-down">
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            
+            <!-- Iconos -->
+            <a @click="accederComoAdmin()"><i class="material-icons candadito">lock_outline</i></a>
+            <a v-if="hayAdministrador == true" @click="cerrarSesionDeAdmin()"><i class="material-icons ojito">remove_red_eye</i></a>
+
+            <div class="container">
+                <div v-show="hayAdministrador == true" id="LoQueVenLosAdmins">  
+
+                    <h2 class="center administrar">¡Bienvenido administrador!</h2>
+                    
+                    <ul class="collapsible">
+                        <li>
+                            <div class="collapsible-header"><i class="material-icons">settings</i> <span class="administrar"> Administrar Grabaciones </span> </div>
+                            <div class="collapsible-body">
+                                
+                                <div class="row">
+                                    <form class="col s12">
+                                        <div class="row">
+                                            
+                                            <a href="https://www.spreaker.com/broadcast/record" target="_black" class="waves-effect grey darken-4 btn col s12 crearGrabacionbtn">Crear una nueva grabación</a>
+
+                                            <div class="input-field col s10">
+                                                <i class="material-icons prefix">add</i>
+                                                <input id="icon_prefix" type="text" class="validate" v-model="grabacion.Link">
+                                                <label for="icon_prefix"> Agregar grabación:</label>
+                                            </div>
+
+                                            <a v-if="guardarEditarGrabacion == false" class="waves-effect grey darken-4 btn col s2 btnAgregarGrabacion" @click="agregarGrabacion()">Agregar</a>
+                                            <a v-else class="waves-effect grey darken-4 btn col s2 btnAgregarGrabacion" @click="enviarEditada()">Editar</a>
+
+                                        </div>
+                                    </form>
+                                </div>
+                                
+                                <p class="administrar grabacionesExistentesTitulo">Grabaciones existentes:</p>
+
+                                <!-- Grabaciones -->
+                                <div v-for="grabacion in grabaciones">
+                                    <iframe :src="grabacion.link" width="100%" height="200px" frameborder="0"></iframe>
+                                    <a class="waves-effect grey darken-4 btn col s2 botonPorGrabacion" @click="editarGrabacion(grabacion.grabacionId, grabacion.link)"><i class="material-icons">edit</i></a>
+                                    <a class="waves-effect grey darken-4 btn col s2 botonPorGrabacion" @click="eliminarGrabacion(grabacion.grabacionId)"><i class="material-icons">delete_forever</i></a>
+                                </div>
+                                
+                                <!-- Instrucciones -->
+                                <div id="modal1" class="modal">
+                                    <div class="modal-content">
+                                        <h4 class="administrar"> ¿Qué puedo hacer? </h4>
+                                        <ol id="lista4">
+                                            <li> Crear una nueva grabación. </li>
+                                            <li> Agregar el src de esa grabación. </li>
+                                            <li> Editar la grabación creada con el botón de icono de lápiz. </li>
+                                            <li> Eliminar la grabación con el icono de zafacón.</li> 
+                                        </ol>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">¡Muy bien!</a>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <a class="waves-effect grey darken-4 btn col s12 documentacionBtn modal-trigger" href="#modal1">Documentación</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="collapsible-header"><i class="material-icons">settings</i> <span class="administrar">  Administrar Transmisiones </span> </div>
+                            <div class="collapsible-body">
+                                
+                                <div class="row">
+                                    <a href="https://www.spreaker.com/broadcast/record" target="_black" class="waves-effect grey darken-4 btn col s12 crearGrabacionbtn">Iniciar Transmisión</a>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field col s10">
+                                        <i class="material-icons prefix">add</i>
+                                        <input id="transmision" type="text" class="validate" v-model="transmision.Link">
+                                        <label for="transmision"> Agregar transmisión:</label>
+                                    </div> 
+
+                                    <a class="waves-effect grey darken-4 btn col s2 btnAgregarGrabacion" @click="agregarTransmision()">Agregar</a>
+                                </div>
+                                
+                                <template v-if="transmitir == true">
+                                    <p class="administrar grabacionesExistentesTitulo">Transmisión actual: </p>
+                                    <div>
+                                        <iframe :src="transmisionActual.Link" width="100%" height="200px" frameborder="0"></iframe>
+                                        <a class="waves-effect grey darken-4 btn col s2 btnAgregarGrabacion" @click="pararTransmisionQueVeElUsuario()">Parar Transmisión</a>
+                                    </div>
+                                </template>
+
+                                <p class="administrar grabacionesExistentesTitulo"> Todas las transmisiones creadas: </p>
+                                
+                                <ul v-for="transmision in transmisiones" class="collection with-header">
+                                    <li class="collection-item">
+                                        <div> {{ transmision.link }} 
+                                            <a href="#!" class="secondary-content">
+                                                <i class="material-icons colorIconitosTransmisionD" @click="eliminarTransmision(transmision.transmisionId)">delete_forever</i>
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div v-show="hayAdministrador == false" id="LoQueLosClientesVen"> 
+
+                    <h2 class="center administrar">¡Bienvenido!</h2>
+
+                    <template v-if="transmisionQueVeElUsuario == true">
+                        <h3 class="left administrar"> Transmisión Actual: </h3>
+                        <iframe :src="transmisionActual.Link" width="100%" height="200px" frameborder="0"></iframe>
+                    </template>
+
+                    <template v-else>
+                        <h3 class="left administrar"> No hay transmisiones en estos momentos. </h3>
+                    </template>
+
+                    <h3 class="left administrar"> Nuestras grabaciones: </h3>
+
+                    <!-- Grabaciones -->
+                    <div v-for="grabacion in grabaciones">
+                        <iframe :src="grabacion.link" width="100%" height="200px" frameborder="0"></iframe>
+                    </div>
+
+                </div>
+
+            </div>
+        </main>
+
+        <footer class="page-footer grey darken-4">
+            <div class="footer-copyright">
+                <div class="container center">
+                    Todos los derechos reservados por QueEmisora!
+                </div>
+            </div>
+        </footer>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script>
+            new Vue({
+                el: 'main',
+                mounted(){
+                    this.cargarGrabaciones();
+                    this.cargarTransmisiones();
+
+                    $(document).ready(function(){
+                        $('.collapsible').collapsible();
+                    });
+
+                    $(document).ready(function(){
+                        $('.modal').modal();
+                    });
+                },
+                data:{
+                    //Admin y Views
+                    hayAdministrador: false,
+                    idAdmin: '20163534',
+                    transmisionQueVeElUsuario: false,
+
+                    //Grabaciones:
+                    grabaciones: [],
+                    grabacion:{
+                        GrabacionId: 0,
+                        Link: '',
+                    },
+                    guardarEditarGrabacion: false,
+
+                    //Transmisiones:
+                    transmitir: false,
+                    transmisiones: [],
+                    transmision: {
+                        TransmisionId: 0,
+                        Link: '',
+                    },
+                    transmisionActual: {
+                        TransmisionId: 0,
+                        Link: '',
+                    },
+                },
+                methods:{
+                    //Metodos de la grabación:
+                    cargarGrabaciones(){
+                        axios.get('http://localhost:2709/Emisora/Grabaciones/Get').then(response => {
+                            if(response.data.length > 0){
+                                this.grabaciones = response.data;
+                            }else{
+                                swal('Revisa la consola', '', 'warning');
+                                console.log(response.data);
+                            }
+                        });
+                    },
+                    agregarGrabacion(){
+                        if(this.grabacion.Link != ''){
+                            axios.post('http://localhost:2709/Emisora/Grabaciones/Post', this.grabacion).then(response => {
+                                if(response.data == true){
+                                    swal('¡Grabación guardada!', '', 'success');
+                                    this.grabacion.Link = '';
+                                    this.cargarGrabaciones();
+                                }else{
+                                    swal('Revisa la consola', '', 'warning');
+                                    console.log(response.data);
+                                }
+                            });
+                        } else {
+                            swal('¡El campo esta vacio!' , '', 'warning');
+                        }
+                    },
+                    editarGrabacion(id, src){
+                        this.guardarEditarGrabacion = true;
+                        this.grabacion.GrabacionId = id;
+                        this.grabacion.Link = src;
+                    },
+                    eliminarGrabacion(id){
+                        swal({
+                            title: "¿Estás seguro?",
+                            text: "La grabación se eliminará de forma permanente",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true,
+                            })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                axios.delete('http://localhost:2709/Emisora/Grabaciones/Delete/'+ id).then(response => {
+                                    if(response.data == true){
+                                        swal('¡Grabación eliminada!', '', 'success');
+                                        this.cargarGrabaciones();
+                                    }else{
+                                        swal('Revisa la consola', '', 'warning');
+                                        console.log(response.data);
+                                    }
+                                });
+                            } else {
+                                swal("No se eliminó la grabación");
+                            }
+                        });
+                    },
+                    enviarEditada(){
+                        if(this.grabacion.Link != ''){
+                            axios.put('http://localhost:2709/Emisora/Grabaciones/Put', this.grabacion).then(response => {
+                                if(response.data == true){
+                                    swal('¡Grabación editada!', '', 'success');
+                                    this.grabacion.GrabacionId = 0;
+                                    this.grabacion.Link = '';
+                                    this.cargarGrabaciones();
+                                    this.guardarEditarGrabacion = false;
+                                }else{
+                                    swal('Revisa la consola', '', 'warning');
+                                    console.log(response.data);
+                                }
+                            });
+                        } else {
+                            swal('¡El campo esta vacio!' , '', 'warning');
+                            this.guardarEditarGrabacion = false;
+                        }
+
+                        
+                    },
+
+                    //Metodos de la transmision:
+                    cargarTransmisiones(){
+                        axios.get('http://localhost:2709/Emisora/Transmisiones/Get').then(response => {
+                            if(response.data.length > 0){
+                                this.transmisiones = response.data;
+                                
+                                //Seteo la ultima transmision:
+                                this.transmisionActual.TransmisionId = this.transmisiones[this.transmisiones.length - 1].transmisionId;
+                                this.transmisionActual.Link = this.transmisiones[this.transmisiones.length - 1].link;
+                            }else{
+                                swal('Revisa la consola', '', 'warning');
+                                console.log(response.data);
+                            }
+                        });
+                    },
+                    agregarTransmision(){
+                        if(this.transmision.Link != ''){
+                            if(this.transmision.TransmisionId != 0){
+                                this.transmision.TransmisionId = 0;
+                            }
+                            axios.post('http://localhost:2709/Emisora/Transmisiones/Post', this.transmision).then(response => {
+                                if(response.data == true){
+                                    swal('¡Transmisión guardada!', '', 'success');
+                                    this.cargarTransmisiones();
+                                    this.transmision.Link = '';
+                                    this.transmitir = true;
+                                    this.transmisionQueVeElUsuario = true;
+                                }else{
+                                    swal('Revisa la consola', '', 'warning');
+                                    console.log(response.data);
+                                }
+                            });
+                        } else {
+                            swal('¡El campo esta vacio!' , '', 'warning');
+                        }
+                    },
+                    eliminarTransmision(id){
+                        swal({
+                            title: "¿Estás seguro?",
+                            text: "La transmision se eliminará de forma permanente",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true,
+                            })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                axios.delete('http://localhost:2709/Emisora/Transmisiones/Delete/'+ id).then(response => {
+                                    if(response.data == true){
+                                        swal('¡Transmición eliminada!', '', 'success');
+                                        this.cargarTransmisiones();
+                                    }else{
+                                        swal('Revisa la consola', '', 'warning');
+                                        console.log(response.data);
+                                    }
+                                });
+                            } else {
+                                swal("No se eliminó la transmición");
+                            }
+                        });
+                    },
+                    pararTransmisionQueVeElUsuario(){
+                        this.transmitir = false;
+                        this.transmisionQueVeElUsuario = false;
+                    },
+
+                    //Metodos de Administrador & Clientes
+                    accederComoAdmin(){
+                        swal({
+                            title: "Introduce tu matrícula",
+                            content: "input",
+                        })
+                        .then((value) => {
+                            if(value != ''){
+                                if(value == this.idAdmin){
+                                    this.hayAdministrador = true;
+                                    swal('Bienvenido', '', 'success');
+                                } else {
+                                    swal('Lo sentimos', 'No eres administrador', 'warning');
+                                }
+                            } else {
+                                swal('No has escrito nada', '', 'warning');
+                            }
+                        });
+                    },
+                    cerrarSesionDeAdmin(){
+                        this.hayAdministrador = false;
+                        swal('Modo espectador', '', 'success');
+                    },
+                }
+            });
+        </script>
+        <script async src="https://widget.spreaker.com/widgets.js"></script>
+    </body>
+</html>

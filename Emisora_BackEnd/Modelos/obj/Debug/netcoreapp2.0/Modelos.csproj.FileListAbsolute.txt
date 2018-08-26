@@ -1,0 +1,9 @@
+C:\Users\Angge\Desktop\Emisora\Emisora\Modelos\bin\Debug\netcoreapp2.0\Modelos.deps.json
+C:\Users\Angge\Desktop\Emisora\Emisora\Modelos\bin\Debug\netcoreapp2.0\Modelos.dll
+C:\Users\Angge\Desktop\Emisora\Emisora\Modelos\bin\Debug\netcoreapp2.0\Modelos.pdb
+C:\Users\Angge\Desktop\Emisora\Emisora\Modelos\obj\Debug\netcoreapp2.0\Modelos.csprojResolveAssemblyReference.cache
+C:\Users\Angge\Desktop\Emisora\Emisora\Modelos\obj\Debug\netcoreapp2.0\Modelos.csproj.CoreCompileInputs.cache
+C:\Users\Angge\Desktop\Emisora\Emisora\Modelos\obj\Debug\netcoreapp2.0\Modelos.AssemblyInfoInputs.cache
+C:\Users\Angge\Desktop\Emisora\Emisora\Modelos\obj\Debug\netcoreapp2.0\Modelos.AssemblyInfo.cs
+C:\Users\Angge\Desktop\Emisora\Emisora\Modelos\obj\Debug\netcoreapp2.0\Modelos.dll
+C:\Users\Angge\Desktop\Emisora\Emisora\Modelos\obj\Debug\netcoreapp2.0\Modelos.pdb
